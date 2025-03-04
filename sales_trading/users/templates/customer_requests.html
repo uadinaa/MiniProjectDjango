@@ -1,0 +1,26 @@
+<h1> customer requests </h1>
+
+<h2>My Purchase Requests</h2>
+<table border="1">
+    <tr>
+        <th>Product</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    {% for request in requests %}
+        <tr>
+            <td>{{ request.product.name }}</td>
+            <td>{{ request.status }}</td>
+            <td>
+                {% if request.status == "accepted" %}
+                    <form action="{% url 'pay_for_product' request.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Pay</button>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+<button onclick="window.location.href='/customer_profile/customer_receipts/'">receipts</button>

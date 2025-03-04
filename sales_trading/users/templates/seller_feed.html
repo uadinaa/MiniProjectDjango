@@ -1,0 +1,19 @@
+<h2>Your Products</h2>
+
+{% if products %}
+    <ul>
+        {% for product in products %}
+            <li>
+                <strong>{{ product.name }}</strong> - ${{ product.price }}
+                <p>{{ product.description }}</p>
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" width="150">
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No products added yet.</p>
+{% endif %}
+
+<a href="{% url 'seller_profile' %}">Back to Profile</a>

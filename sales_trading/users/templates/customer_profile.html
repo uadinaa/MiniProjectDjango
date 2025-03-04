@@ -1,0 +1,56 @@
+<h2>Profile</h2>
+
+<form method="POST" enctype="multipart/form-data">  <!-- Важно добавить enctype -->
+    {% csrf_token %}
+    <input type="text" name="first_name" value="{{ user.first_name }}" placeholder="First Name">
+    <input type="text" name="last_name" value="{{ user.last_name }}" placeholder="Last Name">
+    <input type="text" name="balance" value="{{ user.balance }}" placeholder="Your balance">
+    <input type="email" name="email" value="{{ user.email }}" placeholder="Email">
+
+    <label>Upload Profile Picture:</label>
+    <input type="file" name="profile_picture">  <!-- Поле загрузки -->
+
+    <button type="submit">Update</button>
+</form>
+
+{% if user.profile_picture %}
+    <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="150">
+{% else %}
+    <p>No profile picture uploaded.</p>
+{% endif %}
+
+<div>
+</div>
+
+<!--<button onclick="window.location.href='/customer_profile/purchase_history/'">Purchase History</button>-->
+<button onclick="window.location.href='/customer_profile/customer_feed/'">Browse Products</button>
+<button onclick="window.location.href='/customer_profile/customer_requests/'">My Requests</button>
+
+<!--<button onclick="togglePurchaseHistory()">Purchase History</button>-->
+<!--<div id="purchase-history" style="display: none;">-->
+<!--    <h3>Your Purchases</h3>-->
+<!--    {% if purchases %}-->
+<!--        <ul>-->
+<!--            {% for purchase in purchases %}-->
+<!--                <li>{{ purchase.product_name }} - ${{ purchase.price }}</li>-->
+<!--            {% endfor %}-->
+<!--        </ul>-->
+<!--    {% else %}-->
+<!--        <p>No purchases yet.</p>-->
+<!--    {% endif %}-->
+<!--</div>-->
+
+
+<button onclick="window.location.href='/login'">Log out</button>
+
+
+<script>
+    function togglePurchaseHistory() {
+        var historyDiv = document.getElementById("purchase-history");
+        if (historyDiv.style.display === "none") {
+            historyDiv.style.display = "block";
+        } else {
+            historyDiv.style.display = "none";
+        }
+    }
+</script>

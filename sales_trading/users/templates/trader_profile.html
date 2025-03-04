@@ -1,0 +1,58 @@
+<h1>Welcome, {{ user.username }}</h1>
+
+<!-- Кнопки навигации -->
+<!--<button onclick="showSection('profile')">Profile</button>-->
+
+
+<!-- Раздел просмотра профиля -->
+<div id="profile-section">
+    <h2>Profile</h2>
+    <p><strong>Name:</strong> {{ user.first_name }}</p>
+    <p><strong>Last name:</strong> {{ user.last_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+
+    {% if user.profile_picture %}
+        <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="150">
+    {% else %}
+        <p>No profile picture uploaded.</p>
+    {% endif %}
+
+    <button onclick="showSection('edit-profile')">Edit</button>
+</div>
+
+<!-- Раздел редактирования профиля -->
+<div id="edit-profile-section" style="display: none;">
+    <h2>Edit Profile</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="first_name" value="{{ user.first_name }}" placeholder="Name">
+        <input type="text" name="last_name" value="{{ user.last_name }}" placeholder="Last name">
+        <input type="email" name="email" value="{{ user.email }}" placeholder="Email">
+
+        <label>Upload Profile Picture:</label>
+        <input type="file" name="profile_picture">
+
+        <button type="submit">Save</button>
+    </form>
+    <button onclick="showSection('profile')">Cancel</button>
+</div>
+
+<button onclick="window.location.href='/trader_profile/add_trader_product/'">Add Product</button>
+<button onclick="window.location.href='/trader_profile/trader_products/'">View Your Products</button>
+<button onclick="window.location.href='/trader_profile/trader_all_products/'">View All Products</button>
+<button onclick="window.location.href='/trader_profile/trader_requests/'">Requests</button>
+<button onclick="window.location.href='/login/'">Log out</button>
+
+<!-- JavaScript для переключения разделов -->
+<script>
+    function showSection(section) {
+        document.getElementById('profile-section').style.display = 'none';
+        document.getElementById('edit-profile-section').style.display = 'none';
+
+        if (section === 'profile') {
+            document.getElementById('profile-section').style.display = 'block';
+        } else if (section === 'edit-profile') {
+            document.getElementById('edit-profile-section').style.display = 'block';
+        }
+    }
+</script>

@@ -1,0 +1,62 @@
+<h1> trader requests </h1>
+
+<h2>My Purchase Requests</h2>
+<table border="1">
+    <tr>
+        <th>Product</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    {% for request in my_purchase_requests %}
+    </tr>
+        <tr>
+            <td>{{ request.product.name }}</td>
+            <td>{{ request.status }}</td>
+            <td>
+                {% if request.status == "accepted" %}
+                    <form action="{% url 'trader_pay_for_product' request.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Pay</button>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+    {% empty %}
+    {% endfor %}
+</table>
+
+<button onclick="window.location.href='/trader_profile/trader_receipts/'">receipts</button>
+
+
+<h2>Purchase Requests</h2>
+<table border="1">
+    <tr>
+        <th>Product</th>
+        <th>Customer</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    {% for request in incoming_requests %}
+        <tr>
+            <td>{{ request.product.name }}</td>
+            <td>{{ request.customer.user.username }}</td>
+            <td>{{ request.status }}</td>
+            <td>
+                <form action="{% url 'trader_accept_request' request.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Accept</button>
+                </form>
+                <form action="{% url 'trader_deny_request' request.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Deny</button>
+                </form>
+            </td>
+
+        </tr>
+    {% endfor %}
+</table>
+<a href="{% url 'trader_profile'%}">Back to profile</a>
+
+
+
+

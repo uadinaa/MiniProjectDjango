@@ -1,0 +1,22 @@
+<h1>hihihi customer, this is products</h1>
+
+{% block content %}
+<h2>All Products</h2>
+<a href="{% url 'customer_profile' %}">Back to Profile</a>
+
+<div class="products">
+    {% for product in products %}
+        <div class="product">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" width="150">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            <p>price: {{ product.price }}$</p>
+            <form action="{% url 'customer_purchase_product' product.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">buy</button>
+
+            </form>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

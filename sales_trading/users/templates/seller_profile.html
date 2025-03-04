@@ -1,0 +1,62 @@
+<h1>Welcome, {{ user.username }}</h1>
+
+<!-- Profile Viewing Section -->
+<div id="profile-section">
+    <h2>Profile</h2>
+    <p><strong>Name:</strong> {{ user.first_name }}</p>
+    <p><strong>Last name:</strong> {{ user.last_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Role:</strong>{{ user.role }}</p>
+
+    {% if user.profile_picture %}
+        <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="150">
+    {% else %}
+        <p>No profile picture uploaded.</p>
+    {% endif %}
+    <button onclick="showSection('edit-profile-section')">Edit</button>
+</div>
+
+<!-- Profile Editing Section -->
+<div id="edit-profile-section" style="display: none;">
+    <h2>Edit Profile</h2>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'seller_profile' %}">
+        {% csrf_token %}
+        <input type="text" name="first_name" value="{{ user.first_name }}" placeholder="Name">
+        <input type="text" name="last_name" value="{{ user.last_name }}" placeholder="Last name">
+        <input type="email" name="email" value="{{ user.email }}" placeholder="Email">
+
+        <label>Upload Profile Picture:</label>
+        <input type="file" name="profile_picture">
+
+        <button type="submit">Save</button>
+    </form>
+    <button onclick="showSection('profile-section')">Cancel</button>
+</div>
+
+<!--&lt;!&ndash; Store Selection Section &ndash;&gt;-->
+<!--<form method="POST" enctype="multipart/form-data" action="{% url 'seller_profile' %}">-->
+<!--    {% csrf_token %}-->
+<!--    <h2>Select Stores</h2>-->
+<!--    <label>Select Stores:</label>-->
+<!--    <select name="stores" multiple>-->
+<!--        {% for store in stores %}-->
+<!--            <option value="{{ store.id }}">{{ store.name }}</option>-->
+<!--        {% endfor %}-->
+<!--    </select>-->
+<!--    <button type="submit">Update</button>-->
+<!--</form>-->
+
+<!-- Navigation Buttons -->
+<button onclick="window.location.href='/seller_profile/add_product/'">Add Product</button>
+<button onclick="window.location.href='/seller_profile/seller_products/'">View your products</button>
+<button onclick="window.location.href='/seller_profile/seller_requests/'">Requests</button>
+<button onclick="window.location.href='/login/'">Log out</button>
+
+<!-- JavaScript to Toggle Sections -->
+<script>
+    function showSection(section) {
+        document.getElementById('profile-section').style.display = 'none';
+        document.getElementById('edit-profile-section').style.display = 'none';
+        document.getElementById(section).style.display = 'block';
+    }
+</script>

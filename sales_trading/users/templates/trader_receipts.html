@@ -1,0 +1,24 @@
+<h2>My Receipts</h2>
+<table border="1">
+    <tr>
+        <th>Product</th>
+        <th>Seller</th>
+        <th>Price</th>
+        <th>Date</th>
+        <th>Print</th>
+    </tr>
+    {% for receipt in receipts %}
+        <tr>
+            <td>{{ receipt.product.name }}</td>
+            <td>{{ receipt.seller.user.username }}</td>
+            <td>${{ receipt.price }}</td>
+            <td>{{ receipt.date }}</td>
+            <td>
+                <form action="{% url 'print_receipt' receipt.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Print</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+</table>

@@ -1,0 +1,27 @@
+<h2>Purchase Requests</h2>
+<table border="1">
+    <tr>
+        <th>Product</th>
+        <th>Customer</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    {% for request in requests %}
+        <tr>
+            <td>{{ request.product.name }}</td>
+            <td>{{ request.customer.user.username }}</td>
+            <td>{{ request.status }}</td>
+            <td>
+                <form action="{% url 'accept_request' request.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Accept</button>
+                </form>
+                <form action="{% url 'deny_request' request.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Deny</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+<a href="{% url 'seller_profile'%}">Back to profile</a>

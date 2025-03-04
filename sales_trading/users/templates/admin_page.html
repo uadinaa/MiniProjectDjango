@@ -1,0 +1,5 @@
+{% if user.role == "admin" %}
+    <h1>Welcome, Admin</h1>
+    <button onclick="window.location.href='/admin/create_user/'">Create Admin</button>
+    <button onclick="window.location.href='/admin/purchases/'">View Purchases</button>
+{% endif %}
